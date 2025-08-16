@@ -1,0 +1,76 @@
+﻿@model HomeModel
+
+<script type="text/javascript">
+    window.addEventListener("message", function(e) {
+        if (e.origin !== "http://localhost:3000") return;
+        console.log(e.data);
+        document.getElementById('hiddenIframeTranscript').value = e.data;
+        var res = document.getElementById('IframeTranscript');
+        res.style.backgroundImage = 'url(/images/ai-loading.gif)';
+        res.style.backgroundPosition = 'center';
+
+         var model = new TranscribeModel();
+            model.modelId = "amazon.titan-text-express-v1";
+            model.prompt = e.data;
+
+        // _ai.InvokeAjax(model, '/Json/RequestTranscribeModel', function (data) {
+        //     document.getElementById('IframeTranscript').value = data.result;
+        // });
+
+        var postModel = JSON.stringify(model);
+
+        $.ajax({
+                contentType: "application/json; charset=utf-8",
+                data: postModel,
+                dataType: 'json',
+                success: function(data){
+                    document.getElementById('IframeTranscript').value = data.result;
+                    res.style.backgroundImage = 'url(/images/Empty600.png)';
+                },
+                error: function(xhr, status, err){
+                    alert(xhr.responseText);
+                    console.log("Transcript failed");
+                },
+                type: 'POST',
+                url: '/Json/RequestTranscribeModel'
+            });
+
+
+        // Assuming you've verified the origin of the received message (which
+        // you must do in any case), a convenient idiom for replying to a
+        // message is to call postMessage on event.source and provide
+        // event.origin as the targetOrigin.
+        // e.source.postMessage(
+        // "hi there yourself! the secret response is: rheeeeet!",
+        // e.origin,
+        // );
+    });
+        // function textToSpeech(text) {
+        //   $.ajax({
+        //     type: 'GET',
+        //     url: '/Chat/TextToSpeech?text=' + text,
+
+        //     cache: false,
+        //     success: function (result) {
+
+        //       var audio = document.getElementById('botvoice');
+        //       $("#botvoice").attr("src", "/Audios/" + result);
+        //       audio.load();
+        //       audio.play();
+        //     }
+        //   });
+        // }
+
+
+
+</script>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<iframe name="summerizeFrame" id="summerizeFrame" src="http://localhost:3000" width="850" height="520" frameborder="0" allow="camera; microphone"></iframe>
+
+<div class="text-center" style="width:850px;height:200px;">
+    <textarea id="IframeTranscript" style="width:100%;height:200px;"></textarea>
+</div>
+<textarea id="hiddenIframeTranscript" style="width:200px;height:200px; display:none;"></textarea>
+<div style="width:850px;" class="button-container">
+    <button id="listenButton">Listen</button>
+</div>
