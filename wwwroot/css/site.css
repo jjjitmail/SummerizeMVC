@@ -20,9 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
-
-
-
+.aws-ai {
+    background-image: url(/images/aws-ai.jpg);
+    padding: 0px;
+    margin: 0px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
 
 #IframeTranscript {
     white-space: pre-wrap;
@@ -56,7 +60,8 @@ body, html {
     min-height: 100vh;
     padding: 20px;
 }
-
+/*background-size: 10px 15px;
+background-position: 8px 6px;*/
 /*.container {
     width: 100%;
     max-width: 800px;
@@ -66,7 +71,6 @@ body, html {
     padding: 40px;
     text-align: center;
 }*/
-
 h1 {
     color: #2c3e50;
     margin-bottom: 30px;
