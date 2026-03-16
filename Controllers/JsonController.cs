@@ -12,8 +12,8 @@ namespace SummerizeMVC.Controllers
 {
     public class JsonController : Controller
     {
-        const string aws_access_key_id = "AKIAV4VW7JRJEMN6QOFK";
-        const string aws_secret_access_key = "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";
+        const string aws_access_key_id = "xxxx";
+        const string aws_secret_access_key = "xxx";
         public JsonController() { }
 
         [HttpPost]
